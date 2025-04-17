@@ -1,5 +1,8 @@
 #include "Particle.h"
 
+using namespace KamataEngine;
+using namespace MathUtility;
+
 void Particle::Initialize(Model* model) {
 	// NULLポインタチェック
 	assert(model);
@@ -7,14 +10,24 @@ void Particle::Initialize(Model* model) {
 	model_ = model;
 
 	worldTransform_.Initialize();
+
+	// 色の設定
+	objectcolor_.Initialize();
+	color_ = {1, 1, 0, 1};
 }
 
 void Particle::Update() {
-	// 行列を定数バッファに転送
-	worldTransform_.TransferMatrix();
+	// 移動
+	worldTransform_.translation_ += {0.0f, 0.1f, 0.0f};
+
+	// 行列を更新
+	worldTransform_.UpdateMatrix();
+
+	// 色変更オブジェクトに色の数値を設定する
+	objectcolor_.SetColor(color_);
 }
 
 void Particle::Draw(Camera& camera) {
 	// 3Dモデルを描画
-	model_->Draw(worldTransform_, camera);
+	model_->Draw(worldTransform_, camera, &objectcolor_);
 }
