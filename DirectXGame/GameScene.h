@@ -20,7 +20,7 @@ public:
 	KamataEngine::Model* modelParticle_ = nullptr;
 
 	// パーティクル
-	Particle* particle_ = nullptr;
+	std::list<Particle*> particles_;
 
 	// カメラ
 	KamataEngine::Camera camera_;
