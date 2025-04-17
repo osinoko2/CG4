@@ -44,8 +44,6 @@ void GameScene::Initialize() {
 		// リストに追加
 		particles_.push_back(particle);
 	}
-
-	
 }
 
 void GameScene::Update() { 
@@ -53,6 +51,15 @@ void GameScene::Update() {
 	for(Particle* particle : particles_){
 		particle->Update();
 	}
+
+	// 終了フラグの立ったパーティクルを削除
+	particles_.remove_if([](Particle* particle) {
+		if (particle->IsFinished()) {
+			delete particle;
+			return true;
+		}
+		return false;
+	});
 }
 
 void GameScene::Draw() {
