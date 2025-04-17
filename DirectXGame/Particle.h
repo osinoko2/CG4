@@ -10,7 +10,8 @@ public:
 	/// </summary>
 	/// <param name="model">モデル</param>
 	/// <param name="position">位置</param>
-	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 position);
+	/// <param name="velocity">移動量</param>
+	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 position, KamataEngine::Vector3 velocity);
 
 	/// <summary>
 	/// 更新
@@ -33,4 +34,7 @@ private:
 	KamataEngine::ObjectColor objectcolor_;
 	// 色の数値
 	KamataEngine::Vector4 color_;
+	
+	// 移動量
+	KamataEngine::Vector3 velocity_;
 };
