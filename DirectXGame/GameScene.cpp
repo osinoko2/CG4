@@ -11,12 +11,16 @@ using namespace MathUtility;
 GameScene::~GameScene() {
 	// 3Dモデルデータの解放
 	delete modelParticle_;
+	delete modelEffect_;
 
 	// パーティクルの解放
 	for (Particle* particle : particles_) {
 		delete particle;
 	}
 	particles_.clear();
+
+	// エフェクトの解放
+	delete effect_;
 }
 
 void GameScene::ParticleBorn(Vector3 position) {
@@ -43,9 +47,15 @@ void GameScene::ParticleBorn(Vector3 position) {
 void GameScene::Initialize() {
 	// 3Dモデルデータの生成
 	modelParticle_ = Model::CreateSphere(4, 4);
+	modelEffect_ = Model::CreateFromOBJ("Effect", true);
 
 	// カメラの初期化
 	camera_.Initialize();
+
+	// エフェクトの生成
+	effect_ = new Effect();
+	// エフェクトの初期化
+	effect_->Initialize(modelEffect_);
 
 	// 乱数の初期化
 	srand((unsigned)time(NULL));
@@ -74,6 +84,8 @@ void GameScene::Update() {
 		}
 		return false;
 	});
+
+	effect_->Update();
 }
 
 void GameScene::Draw() {
@@ -84,9 +96,11 @@ void GameScene::Draw() {
 	Model::PreDraw(dxCommon->GetCommandList());
 
 	// パーティクルの描画
-	for (Particle* particle : particles_) {
+	/*for (Particle* particle : particles_) {
 		particle->Draw(camera_);
-	}
+	}*/
+
+	effect_->Draw(camera_);
 
 	// 3Dモデル描画後処理
 	Model::PostDraw();
