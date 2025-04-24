@@ -49,6 +49,24 @@ void GameScene::ParticleBorn(Vector3 position) {
 	}
 }
 
+void GameScene::EffectBorn(Vector3 position) {
+	// エフェクトの生成
+	for (int i = 0; i < 10; i++) {
+		// 生成
+		Effect* effect = new Effect();
+		// 位置
+		Vector3 position_ = position;
+		// 大きさ
+		Vector3 scale = {1.0f, distributo(randomEngine) * 5, 1.0f};
+		// 回転
+		Vector3 rotation = {0.0f, 0.0f, range(randomEngine)};
+		// 初期化
+		effect->Initialize(modelEffect_, position_, scale, rotation);
+		// リストに追加
+		effects_.push_back(effect);
+	}
+}
+
 void GameScene::Initialize() {
 	// 3Dモデルデータの生成
 	modelParticle_ = Model::CreateSphere(4, 4);
@@ -56,20 +74,6 @@ void GameScene::Initialize() {
 
 	// カメラの初期化
 	camera_.Initialize();
-
-	// エフェクトの生成
-	for (int i = 0; i < 10; i++) {
-		// 生成
-		Effect* effect = new Effect();
-		// 大きさ
-		Vector3 scale = {1.0f, distributo(randomEngine) * 5, 1.0f};
-		// 回転
-		Vector3 rotation = {0.0f, 0.0f, range(randomEngine)};
-		// 初期化
-		effect->Initialize(modelEffect_, scale, rotation);
-		// リストに追加
-		effects_.push_back(effect);
-	}
 
 	// 乱数の初期化
 	srand((unsigned)time(NULL));
@@ -83,6 +87,8 @@ void GameScene::Update() {
 
 		// パーティクル発生
 		ParticleBorn(position);
+		// エフェクト発生
+		EffectBorn(position);
 	}
 
 	// パーティクルの更新

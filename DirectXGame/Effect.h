@@ -10,7 +10,7 @@ public:
 	/// <param name="model">モデル</param>
 	/// <param name="position">位置</param>
 	/// <param name="velocity">移動量</param>
-	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 Scale, KamataEngine::Vector3 Rotate);
+	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 position, KamataEngine::Vector3 scale, KamataEngine::Vector3 rotate);
 
 	/// <summary>
 	/// 更新
