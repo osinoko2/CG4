@@ -33,7 +33,7 @@ public:
 	std::list<Particle*> particles_;
 
 	// エフェクト
-	Effect* effect_ = nullptr;
+	std::list<Effect*> effects_;
 
 	// カメラ
 	KamataEngine::Camera camera_;

@@ -22,7 +22,10 @@ GameScene::~GameScene() {
 	particles_.clear();
 
 	// エフェクトの解放
-	delete effect_;
+	for(Effect* effect : effects_){
+		delete effect;
+	}
+	effects_.clear();
 }
 
 void GameScene::ParticleBorn(Vector3 position) {
@@ -55,14 +58,18 @@ void GameScene::Initialize() {
 	camera_.Initialize();
 
 	// エフェクトの生成
-	effect_ = new Effect();
-
-	Vector3 scale = {1.0f, distributo(randomEngine) * 10 , 1.0f};
-
-	Vector3 rotation = {0.0f, 0.0f, range(randomEngine)};
-
-	// エフェクトの初期化
-	effect_->Initialize(modelEffect_, scale, rotation);
+	for (int i = 0; i < 10; i++) {
+		// 生成
+		Effect* effect = new Effect();
+		// 大きさ
+		Vector3 scale = {1.0f, distributo(randomEngine) * 5, 1.0f};
+		// 回転
+		Vector3 rotation = {0.0f, 0.0f, range(randomEngine)};
+		// 初期化
+		effect->Initialize(modelEffect_, scale, rotation);
+		// リストに追加
+		effects_.push_back(effect);
+	}
 
 	// 乱数の初期化
 	srand((unsigned)time(NULL));
@@ -92,7 +99,10 @@ void GameScene::Update() {
 		return false;
 	});
 
-	effect_->Update();
+	// エフェクトの更新
+	for(Effect* effect : effects_){
+		effect->Update();
+	}
 }
 
 void GameScene::Draw() {
@@ -107,7 +117,10 @@ void GameScene::Draw() {
 		particle->Draw(camera_);
 	}*/
 
-	effect_->Draw(camera_);
+	// エフェクトの描画
+	for(Effect* effect : effects_){
+		effect->Draw(camera_);
+	}
 
 	// 3Dモデル描画後処理
 	Model::PostDraw();
