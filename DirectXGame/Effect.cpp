@@ -22,7 +22,7 @@ void Effect::Initialize(Model* model,Vector3 position, Vector3 scale, Vector3 ro
 	worldTransform_.rotation_ = rotate;
 }
 
-void Effect::Update() {
+void Effect::Update(float Rot) {
 	// 終了なら何もしない
 	if (isFinished_) {
 		return;
@@ -40,6 +40,12 @@ void Effect::Update() {
 
 	// フェード処理
 	color_.w = std::clamp(1.0f - counter_ / kDuration, 0.0f, 1.0f);
+
+	if (worldTransform_.scale_.y > 0.0f) {
+		worldTransform_.scale_.y -= 0.1f;
+	}
+
+	worldTransform_.rotation_.z += Rot;
 
 	// 行列を更新
 	worldTransform_.UpdateMatrix();

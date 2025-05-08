@@ -29,6 +29,8 @@ public:
 	/// <param name="position">位置</param>
 	void EffectBorn(KamataEngine::Vector3 position);
 
+private:
+
 	// パーティクル3Dモデルデータ
 	KamataEngine::Model* modelParticle_ = nullptr;
 
@@ -43,5 +45,7 @@ public:
 
 	// カメラ
 	KamataEngine::Camera camera_;
+
+	float RotZ = 0.1f;
 
 };

@@ -57,9 +57,10 @@ void GameScene::EffectBorn(Vector3 position) {
 		// 位置
 		Vector3 position_ = position;
 		// 大きさ
-		Vector3 scale = {1.0f, distributo(randomEngine) * 5, 1.0f};
+		Vector3 scale = {0.25f, distributo(randomEngine) * 5, 1.0f};
 		// 回転
 		Vector3 rotation = {0.0f, 0.0f, range(randomEngine)};
+
 		// 初期化
 		effect->Initialize(modelEffect_, position_, scale, rotation);
 		// リストに追加
@@ -80,6 +81,7 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() { 
+
 	// 確率で発生
 	if (rand() % 20 == 0) {
 		// 発生位置は乱数
@@ -107,7 +109,7 @@ void GameScene::Update() {
 
 	// エフェクトの更新
 	for(Effect* effect : effects_){
-		effect->Update();
+		effect->Update(RotZ);
 	}
 
 	// 終了フラグの立ったエフェクトを削除
