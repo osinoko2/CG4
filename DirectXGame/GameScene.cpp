@@ -57,9 +57,9 @@ void GameScene::EffectBorn(Vector3 position) {
 		// 位置
 		Vector3 position_ = position;
 		// 大きさ
-		Vector3 scale = {0.25f, distributo(randomEngine) * 5, 1.0f};
+		Vector3 scale = {0.15f, /*distributo(randomEngine) * 4*/4.0f, 1.0f};
 		// 回転
-		Vector3 rotation = {0.0f, 0.0f, range(randomEngine)};
+		Vector3 rotation = {0.0f, 0.0f, /*range(randomEngine)*/ float(i * 5)};
 
 		// 初期化
 		effect->Initialize(modelEffect_, position_, scale, rotation);
@@ -83,7 +83,7 @@ void GameScene::Initialize() {
 void GameScene::Update() { 
 
 	// 確率で発生
-	if (rand() % 20 == 0) {
+	if (rand() % 50 == 0) {
 		// 発生位置は乱数
 		Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
 
