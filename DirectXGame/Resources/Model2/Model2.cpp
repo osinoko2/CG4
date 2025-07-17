@@ -149,19 +149,19 @@ Model2* Model2::CreateSquare() {
 		// 左下
 		vertices[0 + i * 2].pos = {-1.0f + i * 2.0f, -1.0f, 0.0f};
 		vertices[0 + i * 2].uv = {0.0f + i * 1.0f, 1.0f};
-		vertices[0 + i * 2].normal = {0.0f, 0.0f, 1.0f};
+		vertices[0 + i * 2].normal = {0.0f, 0.0f, -1.0f};
 		// 左上
 		vertices[1 + i * 2].pos = {-1.0f + i * 2.0f, 1.0f, 0.0f};
 		vertices[1 + i * 2].uv = {0.0f + i * 1.0f, 0.0f};
-		vertices[1 + i * 2].normal = {0.0f, 0.0f, 1.0f};
+		vertices[1 + i * 2].normal = {0.0f, 0.0f, -1.0f};
 		// 右下
 		vertices[2 + i * 2].pos = {1.0f + i * 2.0f, -1.0f, 0.0f};
 		vertices[2 + i * 2].uv = {1.0f + i * 1.0f, 1.0f};
-		vertices[2 + i * 2].normal = {0.0f, 0.0f, 1.0f};
+		vertices[2 + i * 2].normal = {0.0f, 0.0f, -1.0f};
 		// 右上
 		vertices[3 + i * 2].pos = {1.0f + i * 2.0f, 1.0f, 0.0f};
 		vertices[3 + i * 2].uv = {1.0f + i * 1.0f, 0.0f};
-		vertices[3 + i * 2].normal = {0.0f, 0.0f, 1.0f};
+		vertices[3 + i * 2].normal = {0.0f, 0.0f, -1.0f};
 	}
 	
 	for (int i = 0; i < 5; i++) {
