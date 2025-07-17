@@ -138,33 +138,41 @@ Model2* Model2::CreateSquare() {
 	std::vector<uint32_t> indices;
 
 	// 頂点数
-	const uint32_t kNumVertices = 4;
+	const uint32_t kNumVertices = 12;
 	// インデックス数
-	const uint32_t kNumIndices = 6;
+	const uint32_t kNumIndices = 30;
 
 	vertices.resize(kNumVertices);
 	indices.resize(kNumIndices);
-
-	// 左下
-	vertices[0].pos = {-1.0f, -1.0f, 0.0f};
-	vertices[0].uv = {0.0f, 1.0f};
-	vertices[0].normal = {0.0f, 0.0f, 1.0f};
-	// 左上
-	vertices[1].pos = {-1.0f, 1.0f, 0.0f};
-	vertices[1].uv = {0.0f, 0.0f};
-	vertices[1].normal = {0.0f, 0.0f, 1.0f};
-	// 右下
-	vertices[2].pos = {1.0f, -1.0f, 0.0f};
-	vertices[2].uv = {1.0f, 1.0f};
-	vertices[2].normal = {0.0f, 0.0f, 1.0f};
-	// 右上
-	vertices[3].pos = {1.0f, 1.0f, 0.0f};
-	vertices[3].uv = {1.0f, 0.0f};
-	vertices[3].normal = {0.0f, 0.0f, 1.0f};
-
-	// インデックス
-	indices[0] = 1; indices[1] = 3; indices[2] = 0;
-	indices[3] = 3; indices[4] = 2; indices[5] = 0;
+	
+	for (int i = 0; i < 5; i++) {
+		// 左下
+		vertices[0 + i * 2].pos = {-1.0f + i * 2.0f, -1.0f, 0.0f};
+		vertices[0 + i * 2].uv = {0.0f + i * 1.0f, 1.0f};
+		vertices[0 + i * 2].normal = {0.0f, 0.0f, 1.0f};
+		// 左上
+		vertices[1 + i * 2].pos = {-1.0f + i * 2.0f, 1.0f, 0.0f};
+		vertices[1 + i * 2].uv = {0.0f + i * 1.0f, 0.0f};
+		vertices[1 + i * 2].normal = {0.0f, 0.0f, 1.0f};
+		// 右下
+		vertices[2 + i * 2].pos = {1.0f + i * 2.0f, -1.0f, 0.0f};
+		vertices[2 + i * 2].uv = {1.0f + i * 1.0f, 1.0f};
+		vertices[2 + i * 2].normal = {0.0f, 0.0f, 1.0f};
+		// 右上
+		vertices[3 + i * 2].pos = {1.0f + i * 2.0f, 1.0f, 0.0f};
+		vertices[3 + i * 2].uv = {1.0f + i * 1.0f, 0.0f};
+		vertices[3 + i * 2].normal = {0.0f, 0.0f, 1.0f};
+	}
+	
+	for (int i = 0; i < 5; i++) {
+		// インデックス
+		indices[0 + i * 6] = 1 + i * 2;
+		indices[1 + i * 6] = 3 + i * 2;
+		indices[2 + i * 6] = 0 + i * 2;
+		indices[3 + i * 6] = 3 + i * 2;
+		indices[4 + i * 6] = 2 + i * 2;
+		indices[5 + i * 6] = 0 + i * 2;
+	}
 
 	instance->InitializeFromVertices(vertices, indices);
 
