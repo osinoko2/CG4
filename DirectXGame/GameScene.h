@@ -22,7 +22,7 @@ private:
 
 	KamataEngine::Model2* model_ = nullptr;
 
-	uint32_t model2Handle_;
+	uint32_t uvHandle_;
 
 	KamataEngine::WorldTransform worldTransform_;
 
