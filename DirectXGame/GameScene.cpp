@@ -5,7 +5,7 @@ using namespace KamataEngine;
 void GameScene::Initialize() {
 	// 3Dモデルデータの生成
 	//model_ = Model2::CreateFromOBJ("plane", true);
-	model_ = Model2::CreateSquare();
+	model_ = Model2::CreateRing();
 
 	// カメラの初期化
 	camera_.Initialize();
