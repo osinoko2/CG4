@@ -185,15 +185,16 @@ Model2* Model2::CreateRing() {
 	std::vector<Mesh::VertexPosNormalUv> vertices;
 	std::vector<uint32_t> indices;
 
+	const uint32_t kRingDivide = 8;
+
 	// 頂点数
-	const uint32_t kNumVertices = 18;
+	const uint32_t kNumVertices = kRingDivide * 2 + 2;
 	// インデックス数
-	const uint32_t kNumIndices = 48;
+	const uint32_t kNumIndices = kRingDivide * 6;
 
 	vertices.resize(kNumVertices);
 	indices.resize(kNumIndices);
 
-	const uint32_t kRingDivide = 8;
 	const float kOuterRadius = 3.0f;
 	const float kInnerRadius = 2.0f;
 	const float radianPerDivide = 2.0f * std::numbers::pi_v<float> / float(kRingDivide);
@@ -206,20 +207,20 @@ Model2* Model2::CreateRing() {
 		float u = float(index) / float(kRingDivide);
 		float uNext = float(index + 1) / float(kRingDivide);
 		// positionとuv。normalは必要なら+zを設定する
-		vertices[0 + index * 2].pos = {sin * kOuterRadius, cos * kOuterRadius, 0.0f};
-		vertices[0 + index * 2].uv = {u, 0.0f + index};
+		vertices[0 + index * 2].pos = {-sin * kOuterRadius, -cos * kOuterRadius, 0.0f};
+		vertices[0 + index * 2].uv = {u, 0.0f};
 		vertices[0 + index * 2].normal = {0.0f, 0.0f, -1.0f};
 
-		vertices[1 + index * 2].pos = {sin * kInnerRadius, cos * kInnerRadius, 0.0f};
-		vertices[1 + index * 2].uv = {u, 1.0f + index};
+		vertices[1 + index * 2].pos = {-sin * kInnerRadius, -cos * kInnerRadius, 0.0f};
+		vertices[1 + index * 2].uv = {u, 1.0f};
 		vertices[1 + index * 2].normal = {0.0f, 0.0f, -1.0f};
 
-		vertices[2 + index * 2].pos = {sinNext * kOuterRadius, cosNext * kOuterRadius, 0.0f};
-		vertices[2 + index * 2].uv = {uNext, 0.0f + index};
+		vertices[2 + index * 2].pos = {-sinNext * kOuterRadius, -cosNext * kOuterRadius, 0.0f};
+		vertices[2 + index * 2].uv = {uNext, 0.0f};
 		vertices[2 + index * 2].normal = {0.0f, 0.0f, -1.0f};
 
-		vertices[3 + index * 2].pos = {sinNext * kInnerRadius, cosNext * kInnerRadius, 0.0f};
-		vertices[3 + index * 2].uv = {uNext, 1.0f + index};
+		vertices[3 + index * 2].pos = {-sinNext * kInnerRadius, -cosNext * kInnerRadius, 0.0f};
+		vertices[3 + index * 2].uv = {uNext, 1.0f};
 		vertices[3 + index * 2].normal = {0.0f, 0.0f, -1.0f};
 	}
 
