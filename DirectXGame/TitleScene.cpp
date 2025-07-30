@@ -2,19 +2,35 @@
 
 using namespace KamataEngine;
 
-TitleScene::~TitleScene() { delete TitleSprite; }
+TitleScene::~TitleScene() { 
+	delete TitleSprite;
+	delete PassSprite;
+}
 
 void TitleScene::Initialize() {
 
 	TitleHandle = TextureManager::Load("title.png");
+	PassHandle = TextureManager::Load("titlepass.png");
 
-	TitleSprite = Sprite::Create(TitleHandle, {0, 0});
+	TitleSprite = Sprite::Create(TitleHandle, {0, -300});
+	PassSprite = Sprite::Create(PassHandle, {320, 450});
 }
 
 void TitleScene::Update() {
 
-	TitleSprite->SetSize({1280.0f, 720.0f});
+	PassSprite->SetSize({640.0f, 160.0f});
 
+	Vector2 position = TitleSprite->GetPosition();
+
+	if (position.y < 0) {
+		position.y += 5.0f;
+	} else if (position.y > 0) {
+		position.y = 0.0f;
+	}
+
+	TitleSprite->SetPosition(position);
+
+	count++;
 }
 
 void TitleScene::Draw() {
@@ -24,6 +40,9 @@ void TitleScene::Draw() {
 	Sprite::PreDraw(dxCommon->GetCommandList());
 
 	TitleSprite->Draw();
+	if(count % 60 >= 30){
+		PassSprite->Draw();
+	}
 
 	Sprite::PostDraw();
 }

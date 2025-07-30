@@ -16,6 +16,10 @@ public:
 
 private:
 	KamataEngine::Sprite* TitleSprite = nullptr;
+	KamataEngine::Sprite* PassSprite = nullptr;
 
 	uint32_t TitleHandle;
+	uint32_t PassHandle;
+
+	int count = 0;
 };
