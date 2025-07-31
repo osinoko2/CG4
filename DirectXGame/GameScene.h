@@ -3,6 +3,8 @@
 
 class GameScene {
 public:
+	~GameScene();
+
 	// 初期化
 	void Initialize();
 
@@ -12,4 +14,8 @@ public:
 	// 描画
 	void Draw();
 
+	KamataEngine::Sprite* bgSprite = nullptr;
+	KamataEngine::Sprite* nextBgSprite = nullptr;
+
+	uint32_t bgHandle;
 };
