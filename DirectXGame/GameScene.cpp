@@ -10,6 +10,10 @@ GameScene::~GameScene() {
 	for (int i = 0; i < spriteNum; i++) {
 		delete gaugeSprite_[i];
 	}
+
+	for (int i = 0; i < numberNum; i++) {
+		delete numberSprite[i];
+	}
 }
 
 void GameScene::Initialize() {
@@ -21,6 +25,7 @@ void GameScene::Initialize() {
 
 	bgHandle = TextureManager::Load("cavebg.png");
 	whiteHandle = TextureManager::Load("white1x1.png");
+	numberHandle = TextureManager::Load("number.png");
 
 	bgSprite = Sprite::Create(bgHandle, {0, 0});
 	nextBgSprite = Sprite::Create(bgHandle, {1280, 0});
@@ -35,6 +40,17 @@ void GameScene::Initialize() {
 		}
 		gaugeSprite_.push_back(sprite);
 	}
+
+	for (int i = 0; i < numberNum; i++) {
+		Vector2 StartPos = {numberPos.x + numberSize.x * i, numberPos.y};
+		Sprite* sprite = Sprite::Create(numberHandle, StartPos);
+		sprite->SetSize(numberSize);
+
+		numberSprite.push_back(sprite);
+	}
+
+	number = kNumber;
+	count = kNumber;
 }
 
 void GameScene::Update() {
@@ -71,6 +87,23 @@ void GameScene::Update() {
 			}
 		}
 	}
+
+	number += numberSpeed;
+	count = number;
+
+	// 最初に割る数値は5桁なので1000で初期設定する
+	int32_t digit = 10000;
+	// 数字
+	for (int i = 0; i < numberNum; i++) {
+		// 今の桁の数値を取り出す
+		int nowNumber = count / digit;
+		// 今の桁の数値の部分を切り出すようにする
+		numberSprite[i]->SetTextureRect({numberSize.x * nowNumber, 0}, numberSize);
+		// 次の桁の処理のために、残りの桁の数値にする
+		count %= digit;
+		// 次の桁の処理のために、割る数値を10で割って桁に応じた値にする。
+		digit /= 10;
+	}
 }
 
 void GameScene::Draw() {
@@ -98,6 +131,10 @@ void GameScene::Draw() {
 
 	for (int i = 0; i < spriteNum; i++) {
 		gaugeSprite_[i]->Draw();
+	}
+
+	for (int i = 0; i < numberNum; i++) {
+		numberSprite[i]->Draw();
 	}
 
 	Sprite::PostDraw();
