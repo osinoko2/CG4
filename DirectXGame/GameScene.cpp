@@ -2,10 +2,14 @@
 
 using namespace KamataEngine;
 
-GameScene::~GameScene() { 
+GameScene::~GameScene() {
 	delete bgSprite;
 	delete nextBgSprite;
 	delete camera_;
+
+	for (int i = 0; i < spriteNum; i++) {
+		delete gaugeSprite_[i];
+	}
 }
 
 void GameScene::Initialize() {
@@ -16,9 +20,21 @@ void GameScene::Initialize() {
 	player_.Initialize();
 
 	bgHandle = TextureManager::Load("cavebg.png");
+	whiteHandle = TextureManager::Load("white1x1.png");
 
 	bgSprite = Sprite::Create(bgHandle, {0, 0});
 	nextBgSprite = Sprite::Create(bgHandle, {1280, 0});
+
+	for (int i = 0; i < spriteNum; i++) {
+		Sprite* sprite = Sprite::Create(whiteHandle, gaugePos);
+		sprite->SetSize(stargGaugeSize_);
+		if (i == 1) {
+			sprite->SetColor(Vector4(0.24f, 0.70f, 0.44f, 0.5f));
+		} else {
+			sprite->SetColor(Vector4(0.85f, 0.2f, 0.24f, 0.5f));
+		}
+		gaugeSprite_.push_back(sprite);
+	}
 }
 
 void GameScene::Update() {
@@ -44,6 +60,17 @@ void GameScene::Update() {
 
 	bgSprite->SetPosition(position);
 	nextBgSprite->SetPosition(nextposition);
+
+	for (int i = 0; i < spriteNum; i++) {
+
+		// ゲージ
+		if (i == 1) {
+			gaugeSprite_[i]->SetSize(Vector2(gaugeSprite_[i]->GetSize().x - gaugeSpeed, stargGaugeSize_.y));
+			if (gaugeSprite_[i]->GetSize().x <= 0) {
+				gaugeSprite_[i]->SetSize(stargGaugeSize_);
+			}
+		}
+	}
 }
 
 void GameScene::Draw() {
@@ -59,7 +86,7 @@ void GameScene::Draw() {
 
 	// 深度バッファクリア
 	dxCommon->ClearDepthBuffer();
-	
+
 	Model::PreDraw(dxCommon->GetCommandList());
 
 	player_.Draw(*camera_);
@@ -69,7 +96,9 @@ void GameScene::Draw() {
 	// 近景スプライト
 	Sprite::PreDraw(dxCommon->GetCommandList());
 
-
+	for (int i = 0; i < spriteNum; i++) {
+		gaugeSprite_[i]->Draw();
+	}
 
 	Sprite::PostDraw();
 }
